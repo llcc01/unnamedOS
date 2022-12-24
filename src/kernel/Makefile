@@ -15,11 +15,11 @@ all: os.elf
 
 # start.o must be the first in dependency!
 os.elf: ${OBJS}
-	${CC} ${CFLAGS} -Ttext=0x80000000 -o os.elf $^
+	${CC} ${CFLAGS} -T kernel.ld -o os.elf $^
 	${OBJCOPY} -O binary os.elf os.bin
 
 %.o : %.c
-	${CC} ${CFLAGS} -I. -c -o $@ $<
+	${CC} ${CFLAGS} -c -o $@ $<
 
 %.o : %.S
 	${CC} ${CFLAGS} -c -o $@ $<
@@ -35,7 +35,7 @@ debug: all
 	@echo "Press Ctrl-C and then input 'quit' to exit GDB and QEMU"
 	@echo "-------------------------------------------------------"
 	@${QEMU} ${QFLAGS} -kernel os.elf -s -S &
-	@${GDB} os.elf -q -x ./gdbinit
+	@${GDB} os.elf -q -x ../gdbinit
 
 .PHONY : code
 code: all

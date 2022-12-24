@@ -3,5 +3,7 @@
 
 
 # 感谢
-部分代码来源于PLCT实验室慕课资料
-https://github.com/plctlab/riscv-operating-system-mooc 
+- 部分代码来源于PLCT实验室慕课资料
+`https://github.com/plctlab/riscv-operating-system-mooc`
+- rcore
+`http://rcore-os.cn/rCore-Tutorial-Book-v3`
