@@ -1,5 +1,5 @@
-#ifndef _16550_H_
-#define _16550_H_
+#ifndef __16550_H__
+#define __16550_H__
 
 void uart_init();
 void uart_puts(char *);

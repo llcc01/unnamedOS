@@ -1,5 +1,10 @@
 {
     "files.associations": {
-        "16550.h": "c"
+        "16550.h": "c",
+        "page.h": "c",
+        "printf.h": "c",
+        "types.h": "c",
+        "stdarg.h": "c",
+        "compare": "c"
     }
 }

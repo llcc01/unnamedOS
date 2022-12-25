@@ -2,10 +2,13 @@ include ../common.mk
 
 SRCS_ASM = \
 	start.S \
+	mem/mem_const.S \
 
 SRCS_C = \
 	kernel.c \
 	drivers/uart/16550.c \
+	mem/page.c \
+	utils/printf.c \
 
 OBJS = $(SRCS_ASM:.S=.o)
 OBJS += $(SRCS_C:.c=.o)
@@ -35,7 +38,7 @@ debug: all
 	@echo "Press Ctrl-C and then input 'quit' to exit GDB and QEMU"
 	@echo "-------------------------------------------------------"
 	@${QEMU} ${QFLAGS} -kernel os.elf -s -S &
-	@${GDB} os.elf -q -x ../gdbinit
+	@${GDB} os.elf -q -x ./gdbinit
 
 .PHONY : code
 code: all
@@ -43,5 +46,6 @@ code: all
 
 .PHONY : clean
 clean:
-	rm -rf *.o *.bin *.elf
+	rm -f *.bin *.elf
+	find -name "*.o" | xargs rm -f
 
