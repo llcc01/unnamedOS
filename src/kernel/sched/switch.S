@@ -1,5 +1,5 @@
 # save all General-Purpose(GP) registers to context
-# struct context *base = &ctx_task;
+# struct context *base = &task_ctx;
 # base->ra = ra;
 # ......
 # !!! in risc-v32, offset should be 4; in risc-v64, offset should be 8
@@ -76,7 +76,7 @@
 .endm
 
 # restore all General-Purpose(GP) registers from the context
-# struct context *base = &ctx_task;
+# struct context *base = &task_ctx;
 # ra = base->ra;
 # ......
 # !!! in risc-v32, offset should be 4; in risc-v64, offset should be 8
