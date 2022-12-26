@@ -57,11 +57,11 @@ void page_init()
     _pd_start = (struct page_descriptor *)HEAP_START;
     _pd_end = _pd_start + _page_num;
 
-    printf("TEXT:   0x%x -> 0x%x\n", TEXT_START, TEXT_END);
-    printf("RODATA: 0x%x -> 0x%x\n", RODATA_START, RODATA_END);
-    printf("DATA:   0x%x -> 0x%x\n", DATA_START, DATA_END);
-    printf("BSS:    0x%x -> 0x%x\n", BSS_START, BSS_END);
-    printf("HEAP:   0x%x -> 0x%x\n", _page_start, _page_end);
+    printf("TEXT:   %p -> %p\n", TEXT_START, TEXT_END);
+    printf("RODATA: %p -> %p\n", RODATA_START, RODATA_END);
+    printf("DATA:   %p -> %p\n", DATA_START, DATA_END);
+    printf("BSS:    %p -> %p\n", BSS_START, BSS_END);
+    printf("HEAP:   %p -> %p\n", _page_start, _page_end);
 }
 
 /*
@@ -136,13 +136,13 @@ void page_free(struct page_frame *p)
 void page_test()
 {
     struct page_frame *p = page_alloc(2);
-    printf("p = 0x%x\n", p);
+    printf("p = %p\n", p);
     // page_free(p);
 
     struct page_frame *p2 = page_alloc(7);
-    printf("p2 = 0x%x\n", p2);
+    printf("p2 = %xp\n", p2);
     page_free(p2);
 
     struct page_frame *p3 = page_alloc(4);
-    printf("p3 = 0x%x\n", p3);
+    printf("p3 = %p\n", p3);
 }

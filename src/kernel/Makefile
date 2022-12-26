@@ -3,12 +3,15 @@ include ../common.mk
 SRCS_ASM = \
 	start.S \
 	mem/mem_const.S \
+	sched/switch.S \
 
 SRCS_C = \
 	kernel.c \
 	drivers/uart/16550.c \
 	mem/page.c \
 	utils/printf.c \
+	sched/sched.c \
+	user/user.c \
 
 OBJS = $(SRCS_ASM:.S=.o)
 OBJS += $(SRCS_C:.c=.o)
@@ -48,4 +51,3 @@ code: all
 clean:
 	rm -f *.bin *.elf
 	find -name "*.o" | xargs rm -f
-

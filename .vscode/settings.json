@@ -5,6 +5,9 @@
         "printf.h": "c",
         "types.h": "c",
         "stdarg.h": "c",
-        "compare": "c"
+        "compare": "c",
+        "sched.h": "c",
+        "switch.h": "c",
+        "user.h": "c"
     }
 }

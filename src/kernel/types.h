@@ -7,5 +7,6 @@ typedef unsigned int  uint32_t;
 typedef unsigned long long uint64_t;
 
 typedef uint64_t uword_t;
+typedef uword_t reg_t;
 
 #endif /* __TYPES_H__ */
