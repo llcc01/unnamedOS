@@ -1,4 +1,4 @@
-#include "types.h"
+#include "inc/types.h"
 #include "utils/printf.h"
 #include "switch.h"
 #include "sched.h"
@@ -41,11 +41,11 @@ void schedule()
 
 /*
  * DESCRIPTION
- * 	Create a task.
- * 	- start_routin: task routine entry
+ *     Create a task.
+ *     - start_routin: task routine entry
  * RETURN VALUE
- * 	0: success
- * 	-1: if error occured
+ *     0: success
+ *     -1: if error occured
  */
 int task_create(void (*start_routin)(void))
 {
@@ -64,8 +64,8 @@ int task_create(void (*start_routin)(void))
 
 /*
  * DESCRIPTION
- * 	task_yield()  causes the calling task to relinquish the CPU and a new
- * 	task gets to run.
+ *     task_yield()  causes the calling task to relinquish the CPU and a new
+ *     task gets to run.
  */
 void task_yield()
 {

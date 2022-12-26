@@ -1,7 +1,7 @@
 #ifndef __MEM_CONST_H__
 #define __MEM_CONST_H__
 
-#include "types.h"
+#include "inc/types.h"
 
 /*
  * Following global vars are defined in mem.S

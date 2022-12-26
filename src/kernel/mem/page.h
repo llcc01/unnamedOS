@@ -1,7 +1,7 @@
 #ifndef __PAGE_H__
 #define __PAGE_H__
 
-#include "types.h"
+#include "inc/types.h"
 
 #define PAGE_FRAME_SIZE 4096
 #define PAGE_ORDER 8
