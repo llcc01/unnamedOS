@@ -1,10 +1,10 @@
-#include <stddef.h>
 #include "types.h"
+#include <stddef.h>
 #include "mem_const.h"
 #include "utils/printf.h"
 #include "page.h"
 
-static uword_t _page_num = 0;
+static ssize_t _page_num = 0;
 static struct page_frame *_page_start = 0;
 static struct page_frame *_page_end = 0;
 static struct page_descriptor *_pd_start = 0;
@@ -35,8 +35,8 @@ static inline int _is_rear(struct page_descriptor *pd_p)
  */
 static inline struct page_frame *_align_page(struct page_frame *address)
 {
-    uword_t order = (1 << PAGE_ORDER) - 1;
-    return (struct page_frame *)(((uword_t)address + order) & (~order));
+    ssize_t order = (1 << PAGE_ORDER) - 1;
+    return (struct page_frame *)(((ssize_t)address + order) & (~order));
 }
 
 void page_init()
@@ -45,7 +45,7 @@ void page_init()
     printf("HEAP_START = %x, HEAP_SIZE = %x, num of pages = %d\n", HEAP_START, HEAP_SIZE, _page_num);
 
     struct page_descriptor *pd_p = (struct page_descriptor *)HEAP_START;
-    for (uword_t i = 0; i < _page_num; i++)
+    for (ssize_t i = 0; i < _page_num; i++)
     {
         // printf("clean %x\n", pd_p);
         _clear(pd_p);
@@ -69,11 +69,11 @@ void page_init()
  * - npages: the number of PAGE_SIZE pages to allocate
  * 采用2^n对齐 align the addr with 2^n
  */
-struct page_frame *page_alloc(uword_t npages)
+struct page_frame *page_alloc(ssize_t npages)
 {
     /* Note we are searching the page descriptor bitmaps. */
     int found = 0;
-    uword_t align = 1;
+    ssize_t align = 1;
     while (align < npages)
     {
         align <<= 1;
@@ -101,7 +101,7 @@ struct page_frame *page_alloc(uword_t npages)
             if (found)
             {
                 struct page_descriptor *pd_op = pd_i;
-                for (uword_t i = 0; i < npages; i++, pd_op++)
+                for (ssize_t i = 0; i < npages; i++, pd_op++)
                 {
                     _set_flag(pd_op, PAGE_USED);
                 }
