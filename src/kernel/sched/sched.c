@@ -1,7 +1,7 @@
 #include "inc/types.h"
 #include "utils/printf.h"
-#include "switch.h"
-#include "sched.h"
+#include "sched/switch.h"
+#include "sched/sched.h"
 
 #define TASK_MAX_NUM 64
 struct task_stack task_stack[TASK_MAX_NUM];
@@ -35,7 +35,7 @@ void schedule()
 
     _current = (_current + 1) % _top;
     struct context *next = &task_ctx[_current];
-    printf("turn to %d, ctx:%p\n", _current, next);
+    // printf("turn to %d, ctx:%p\n", _current, next);
     switch_to(next);
 }
 

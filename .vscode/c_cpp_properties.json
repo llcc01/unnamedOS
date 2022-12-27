@@ -3,7 +3,7 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceRoot}/src/**",
+                "${workspaceRoot}/src/kernel/*",
                 "${default}"
             ],
             "defines": [],

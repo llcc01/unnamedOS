@@ -8,6 +8,11 @@
         "compare": "c",
         "sched.h": "c",
         "switch.h": "c",
-        "user.h": "c"
+        "user.h": "c",
+        "platform.h": "c",
+        "riscv.h": "c",
+        "isr.h": "c",
+        "uart.h": "c",
+        "plic.h": "c"
     }
 }

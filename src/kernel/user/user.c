@@ -2,7 +2,7 @@
 #include "drivers/uart/16550.h"
 #include "utils/printf.h"
 #include "trap/trap.h"
-#include "user.h"
+#include "user/user.h"
 
 #define DELAY 1000
 
@@ -55,7 +55,7 @@ void user_task_trap(void)
         uart_puts("Task trap: Running...\n");
         // trap_test();
         *((int *)0) = 0;
-        printf("%d",*((int *)0));
+        printf("%d\n",*((int *)0));
 
         task_delay(DELAY);
         task_yield();
@@ -72,7 +72,7 @@ void os_main(void)
     // task_create(user_task3);
     // task_create(user_task4);
     // task_create(user_task5);
-    task_create(user_task_trap);
+    // task_create(user_task_trap);
 
     uart_puts("os_main: schedule\n");
     schedule();

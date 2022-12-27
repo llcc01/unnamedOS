@@ -1,8 +1,8 @@
 #include "inc/types.h"
 #include <stddef.h>
-#include "mem_const.h"
+#include "mem/mem_const.h"
 #include "utils/printf.h"
-#include "page.h"
+#include "mem/page.h"
 
 static ssize_t _page_num = 0;
 static struct page_frame *_page_start = 0;
@@ -140,7 +140,7 @@ void page_test()
     // page_free(p);
 
     struct page_frame *p2 = page_alloc(7);
-    printf("p2 = %xp\n", p2);
+    printf("p2 = %p\n", p2);
     page_free(p2);
 
     struct page_frame *p3 = page_alloc(4);

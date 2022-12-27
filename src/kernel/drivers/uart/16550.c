@@ -1,6 +1,6 @@
 #include "inc/types.h"
 #include "inc/platform.h"
-#include "16550.h"
+#include "drivers/uart/16550.h"
 
 /*
  * The UART control registers are memory-mapped at address UART0. 
@@ -104,12 +104,27 @@ void uart_init()
      */
     lcr = 0;
     uart_write_reg(LCR, lcr | (3 << 0));
+
+    /*
+	 * enable receive interrupts.
+	 */
+	uint8_t ier = uart_read_reg(IER);
+	uart_write_reg(IER, ier | (1 << 0));
 }
 
 int uart_putc(char ch)
 {
     while ((uart_read_reg(LSR) & LSR_TX_IDLE) == 0);
     return uart_write_reg(THR, ch);
+}
+
+int uart_getc(void)
+{
+	if (uart_read_reg(LSR) & LSR_RX_READY){
+		return uart_read_reg(RHR);
+	} else {
+		return -1;
+	}
 }
 
 void uart_puts(char *s)
