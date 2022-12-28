@@ -13,6 +13,7 @@
         "riscv.h": "c",
         "isr.h": "c",
         "uart.h": "c",
-        "plic.h": "c"
+        "plic.h": "c",
+        "timer.h": "c"
     }
 }

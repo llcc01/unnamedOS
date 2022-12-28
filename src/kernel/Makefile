@@ -10,13 +10,13 @@ SRCS_C = \
 	kernel.c \
 	drivers/uart/16550.c \
 	drivers/plic/plic.c \
+	drivers/clint/timer.c \
 	mem/page.c \
 	utils/printf.c \
 	sched/sched.c \
 	user/user.c \
 	trap/trap.c \
 	trap/isr.c \
-	trap/isr/uart.c \
 
 OBJS = $(SRCS_ASM:.S=.o)
 OBJS += $(SRCS_C:.c=.o)

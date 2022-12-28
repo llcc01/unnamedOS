@@ -1,5 +1,6 @@
 #include "drivers/uart/16550.h"
 #include "drivers/plic/plic.h"
+#include "drivers/clint/timer.h"
 #include "utils/printf.h"
 #include "mem/page.h"
 #include "sched/sched.h"
@@ -17,6 +18,8 @@ void start_kernel(void)
 
     trap_init();
     plic_init();
+    timer_init();
+
     sched_init();
     
     os_main();

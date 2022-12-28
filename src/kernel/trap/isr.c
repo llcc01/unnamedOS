@@ -1,8 +1,9 @@
 #include "inc/types.h"
 #include "inc/platform.h"
 #include "inc/riscv.h"
+#include "drivers/uart/16550.h"
 #include "drivers/plic/plic.h"
-#include "trap/isr/uart.h"
+#include "drivers/clint/timer.h"
 #include "utils/printf.h"
 #include "trap/isr.h"
 
@@ -23,4 +24,29 @@ void external_interrupt_handler()
     {
         plic_complete(irq);
     }
+}
+
+
+/*
+ * handle a uart interrupt, raised because input has arrived, called from trap.c.
+ */
+void uart_isr(void)
+{
+	while (1) {
+		int c = uart_getc();
+		if (c == -1) {
+			break;
+		} else {
+			uart_putc((char)c);
+			uart_putc('\n');
+		}
+	}
+}
+
+void timer_handler() 
+{
+	_tick++;
+	printf("tick: %d\n", _tick);
+
+	timer_load(TIMER_INTERVAL);
 }
