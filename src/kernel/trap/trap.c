@@ -46,7 +46,7 @@ reg_t trap_handler(reg_t epc, reg_t cause)
         printf("Sync exceptions!, code = %d\n", cause_code);
 
         panic("OOPS! What can I do!");
-        // return_pc += sizeof(ssize_t);
+        // return_pc += 4;
     }
 
     return return_pc;

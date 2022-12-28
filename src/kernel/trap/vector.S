@@ -5,7 +5,7 @@
 # interrupts and exceptions while in machine mode come here.
 .globl trap_vector
 # the trap vector base address must always be aligned on a 4-byte boundary
-.align 8
+.align 4
 trap_vector:
     # save context(registers).
     csrrw    t6, mscratch, t6    # swap t6 and mscratch

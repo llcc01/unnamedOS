@@ -5,7 +5,7 @@
 # void switch_to(struct context *next);
 # a0: pointer to the context of the next task
 .globl switch_to
-.align 8
+.align 4
 switch_to:
     csrrw    t6, mscratch, t6    # swap t6 and mscratch
     beqz    t6, 1f            # Notice: the first time switch_to() is
