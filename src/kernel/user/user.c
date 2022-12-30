@@ -14,7 +14,6 @@
         {                                           \
             uart_puts("Task " #n ": Running...\n"); \
             task_delay(DELAY);                      \
-            task_yield();                           \
         }                                           \
     }
 

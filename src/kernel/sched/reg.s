@@ -155,5 +155,6 @@
 
 # !!! in risc-v32, offset should be 120=4*30; in risc-v64, offset should be 240=8*30
 #define _t6_offset 240
+#define _mepc_offset 248
 #define reg_restore reg_restore64
 #define reg_save reg_save64

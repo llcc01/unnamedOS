@@ -6,6 +6,7 @@
 #include "drivers/clint/timer.h"
 #include "utils/printf.h"
 #include "trap/isr.h"
+#include "sched/sched.h"
 
 void external_interrupt_handler()
 {
@@ -49,4 +50,6 @@ void timer_handler()
 	printf("tick: %d\n", _tick);
 
 	timer_load(TIMER_INTERVAL);
+
+    schedule();
 }

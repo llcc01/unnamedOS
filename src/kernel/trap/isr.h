@@ -3,5 +3,6 @@
 
 void external_interrupt_handler();
 void uart_isr(void);
+void timer_handler();
 
 #endif

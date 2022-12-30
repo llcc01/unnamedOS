@@ -26,7 +26,7 @@ struct page_descriptor
 };
 
 void page_init();
-struct page_frame *page_alloc(ssize_t npages);
+struct page_frame *page_alloc(reg_t npages);
 void page_free(struct page_frame *p);
 void page_test();
 

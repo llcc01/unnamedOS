@@ -5,6 +5,26 @@
 #include "drivers/uart/16550.h"
 #include "trap/isr.h"
 #include "trap/trap.h"
+#include "sched/sched.h"
+
+const char *cause_msg[] = {
+    "Instruction address misaligned",
+    "Instruction access fault",
+    "Illegal instruction",
+    "Breakpoint",
+    "Load address misaligned",
+    "Load access fault",
+    "Store/AMO address misaligned",
+    "Store/AMO access fault",
+    "Environment call from U-mode",
+    "Environment call from S-mode",
+    "Reserved",
+    "Environment call from M-mode",
+    "Instruction page fault",
+    "Load page fault",
+    "Reserved",
+    "Store/AMO page fault"};
+
 
 void trap_init()
 {
@@ -20,7 +40,7 @@ reg_t trap_handler(reg_t epc, reg_t cause)
     reg_t cause_code = cause & 0xfff;
 
     /* if the highest bit is 1 */
-    if (cause >> (sizeof(ssize_t) * 8 - 1))
+    if (cause >> (sizeof(reg_t) * 8 - 1))
     {
         /* Asynchronous trap - interrupt */
         switch (cause_code)
@@ -45,7 +65,11 @@ reg_t trap_handler(reg_t epc, reg_t cause)
     {
         /* Synchronous trap - exception */
         printf("Sync exceptions!, code = %d\n", cause_code);
-
+        if (cause_code < (sizeof(cause_msg) / sizeof(char *)))
+        {
+            printf("cause_msg: %s\n", cause_msg[cause_code]);
+        }
+        task_print_reg();
         panic("OOPS! What can I do!");
         // return_pc += 4;
     }

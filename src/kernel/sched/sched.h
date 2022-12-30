@@ -5,7 +5,8 @@
 
 #define STACK_SIZE 1024
 
-struct context {
+struct context
+{
     /* ignore x0 */
     reg_t ra;
     reg_t sp;
@@ -38,6 +39,9 @@ struct context {
     reg_t t4;
     reg_t t5;
     reg_t t6;
+
+    // save the pc to run in next schedule cycle
+    reg_t pc; // offset: 31 *4 = 124 or 31 *8 = 248
 };
 
 struct task_stack
@@ -47,10 +51,12 @@ struct task_stack
 
 void sched_init(void);
 
-int  task_create(void (*task)(void));
+int task_create(void (*task)(void));
 void task_delay(volatile int count);
 void task_yield();
 
 void schedule();
+
+void task_print_reg();
 
 #endif
