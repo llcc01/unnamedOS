@@ -41,10 +41,10 @@
 
 TASK_FUN(0)
 TASK_FUN(1)
-// TASK_FUN(2)
-// TASK_FUN(3)
-// TASK_FUN(4)
-// TASK_FUN(5)
+TASK_FUN(2)
+TASK_FUN(3)
+TASK_FUN(4)
+TASK_FUN(5)
 
 void user_task_trap(void)
 {
@@ -54,7 +54,7 @@ void user_task_trap(void)
         uart_puts("Task trap: Running...\n");
         // trap_test();
         *((int *)0) = 0;
-        printf("%d\n",*((int *)0));
+        printf("%d\n", *((int *)0));
 
         task_delay(DELAY);
         task_yield();
@@ -65,14 +65,18 @@ void user_task_trap(void)
 void os_main(void)
 {
     uart_puts("entry os_main\n");
-    task_create(user_task0);
-    task_create(user_task1);
-    // task_create(user_task2);
-    // task_create(user_task3);
-    // task_create(user_task4);
-    // task_create(user_task5);
+    task_create(user_task0, 10);
+    task_create(user_task1, 12);
+    task_create(user_task2, 15);
+    task_create(user_task3, 20);
+    task_create(user_task4, 30);
+    task_create(user_task5, 20);
     // task_create(user_task_trap);
 
     uart_puts("os_main: schedule\n");
-    schedule();
+
+    sched_start();
+
+    while (1)
+        ;
 }

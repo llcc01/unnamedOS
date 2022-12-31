@@ -1,5 +1,5 @@
 #include "inc/types.h"
-#include "vector.h"
+#include "trap/vector.h"
 #include "inc/riscv.h"
 #include "utils/printf.h"
 #include "drivers/uart/16550.h"
@@ -25,7 +25,6 @@ const char *cause_msg[] = {
     "Reserved",
     "Store/AMO page fault"};
 
-
 void trap_init()
 {
     /*
@@ -49,7 +48,7 @@ reg_t trap_handler(reg_t epc, reg_t cause)
             uart_puts("software interruption!\n");
             break;
         case 7:
-            uart_puts("timer interruption!\n");
+            // uart_puts("timer interruption!\n");
             timer_handler();
             break;
         case 11:
@@ -67,8 +66,9 @@ reg_t trap_handler(reg_t epc, reg_t cause)
         printf("Sync exceptions!, code = %d\n", cause_code);
         if (cause_code < (sizeof(cause_msg) / sizeof(char *)))
         {
-            printf("cause_msg: %s\n", cause_msg[cause_code]);
+            printf("Exception: %s\n", cause_msg[cause_code]);
         }
+        printf("Instruction Addr: %p\n", epc);
         task_print_reg();
         panic("OOPS! What can I do!");
         // return_pc += 4;

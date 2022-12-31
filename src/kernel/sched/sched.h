@@ -49,14 +49,21 @@ struct task_stack
     uint8_t data[STACK_SIZE];
 };
 
+struct task_meta
+{
+    uint16_t tick_max;
+};
+
 void sched_init(void);
 
-int task_create(void (*task)(void));
+int task_create(void (*start_routin)(void),uint32_t tick_max);
 void task_delay(volatile int count);
 void task_yield();
 
 void schedule();
 
 void task_print_reg();
+
+void sched_start();
 
 #endif

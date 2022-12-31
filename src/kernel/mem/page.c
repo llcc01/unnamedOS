@@ -42,7 +42,7 @@ static inline struct page_frame *_align_page(struct page_frame *address)
 void page_init()
 {
     _page_num = (HEAP_SIZE / PAGE_FRAME_SIZE) - PAGE_FRAME_RESERVED_NUM;
-    printf("HEAP_START = %x, HEAP_SIZE = %x, num of pages = %d\n", HEAP_START, HEAP_SIZE, _page_num);
+    printf("HEAP_START = %p, HEAP_SIZE = %p, num of pages = %d\n", HEAP_START, HEAP_SIZE, _page_num);
 
     struct page_descriptor *pd_p = (struct page_descriptor *)HEAP_START;
     for (reg_t i = 0; i < _page_num; i++)

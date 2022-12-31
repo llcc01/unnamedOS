@@ -27,29 +27,35 @@ void external_interrupt_handler()
     }
 }
 
-
 /*
  * handle a uart interrupt, raised because input has arrived, called from trap.c.
  */
 void uart_isr(void)
 {
-	while (1) {
-		int c = uart_getc();
-		if (c == -1) {
-			break;
-		} else {
-			uart_putc((char)c);
-			uart_putc('\n');
-		}
-	}
+    while (1)
+    {
+        int c = uart_getc();
+        if (c == -1)
+        {
+            break;
+        }
+        else
+        {
+            uart_putc((char)c);
+            uart_putc('\n');
+        }
+    }
 }
 
-void timer_handler() 
+void timer_handler()
 {
-	_tick++;
-	printf("tick: %d\n", _tick);
+    _tick++;
+    if (_tick % 10 == 0)
+    {
+        printf("tick: %d\n", _tick);
+    }
 
-	timer_load(TIMER_INTERVAL);
+    timer_load(TIMER_INTERVAL);
 
     schedule();
 }

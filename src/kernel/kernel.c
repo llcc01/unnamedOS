@@ -18,13 +18,17 @@ void start_kernel(void)
 
     trap_init();
     plic_init();
-    timer_init();
 
     sched_init();
+    timer_init();
     
     os_main();
 
     uart_puts("Would not go here!\n");
-    while (1) ; // stop here!
+    while (1)  // stop here!
+    {
+        uart_puts("Would not go here!\n");
+        task_delay(100);
+    }
 }
 

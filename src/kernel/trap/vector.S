@@ -15,11 +15,11 @@ trap_vector:
 	# mscratch
 	mv	t5, t6		# t5 points to the context of current task
 	csrr	t6, mscratch	# read t6 back from mscratch
-	sw	t6, _t6_offset(t5)	# save t6 with t5 as base
+	sd	t6, _t6_offset(t5)	# save t6 with t5 as base
 
 	# save mepc to context of current task
 	csrr	a0, mepc
-	sw	a0, _mepc_offset(t5)
+	sd	a0, _mepc_offset(t5)
 
 	# Restore the context pointer into mscratch
 	csrw	mscratch, t5
