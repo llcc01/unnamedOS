@@ -50,10 +50,10 @@ void uart_isr(void)
 void timer_handler()
 {
     _tick++;
-    if (_tick % 10 == 0)
-    {
-        printf("tick: %d\n", _tick);
-    }
+    // if (_tick % 10 == 0)
+    // {
+    //     printf("tick: %d\n", _tick);
+    // }
 
     timer_load(TIMER_INTERVAL);
 

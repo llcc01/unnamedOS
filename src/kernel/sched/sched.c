@@ -18,7 +18,7 @@ static int _current = -1;
 
 void sched_init()
 {
-    w_mscratch(&task_kernel_ctx);
+    w_mscratch((reg_t)&task_kernel_ctx);
 
     // /* enable machine-mode software interrupts. */
     // w_mie(r_mie() | MIE_MSIE);
@@ -47,7 +47,7 @@ void schedule()
     _current = (_current + 1) % _top;
     struct context *next = &task_ctx[_current];
     tick_max = task_meta[_current].tick_max;
-    printf("turn to %d, ctx: %p, tick_max: %d\n", _current, next, tick_max);
+    // printf("turn to %d, ctx: %p, tick_max: %d\n", _current, next, tick_max);
     switch_to(next);
 }
 

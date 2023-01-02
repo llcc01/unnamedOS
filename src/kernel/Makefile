@@ -5,6 +5,7 @@ SRCS_ASM = \
 	mem/mem_const.S \
 	sched/switch.S \
 	trap/vector.S \
+	lock/spinlock.S \
 
 SRCS_C = \
 	kernel.c \
@@ -17,6 +18,7 @@ SRCS_C = \
 	user/user.c \
 	trap/trap.c \
 	trap/isr.c \
+	lock/lock.c \
 
 OBJS = $(SRCS_ASM:.S=.o)
 OBJS += $(SRCS_C:.c=.o)
