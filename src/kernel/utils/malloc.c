@@ -60,6 +60,10 @@ void free(void *ptr)
 
 void *realloc(void *ptr, size_t size)
 {
+    if (ptr == NULL)
+    {
+        return malloc(size);
+    }
     struct malloc_frame *mf = (struct malloc_frame *)((uint8_t *)ptr - sizeof(struct malloc_frame));
     if (mf->size >= size)
     {

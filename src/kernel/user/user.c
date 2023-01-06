@@ -1,9 +1,11 @@
 #include "sched/sched.h"
 #include "drivers/uart/16550.h"
+#include "drivers/clint/timer.h"
 #include "utils/printf.h"
 #include "trap/trap.h"
 #include "user/user.h"
 #include "lock/lock.h"
+#include "soft_timer/soft_timer.h"
 
 #define DELAY 1000
 
@@ -82,6 +84,26 @@ void user_task_trap(void)
     }
 }
 
+void timer_callback1(uint64_t *tick)
+{
+    printf("Timer callback1: tick %d\n", *tick);
+}
+
+void user_task_create_timer()
+{
+    uart_puts("Task create timer: Created!\n");
+    uint16_t tid = soft_timer_create((void (*)(void *))timer_callback1, &_tick, 100);
+    if (tid == SOFT_TIMER_ID_INVALID)
+    {
+        uart_puts("Task create timer: Create timer failed!\n");
+    }
+    while (1)
+    {
+        uart_puts("Task create timer: Running...\n");
+        task_delay(DELAY);
+    }
+}
+
 /* NOTICE: DON'T LOOP INFINITELY IN main() */
 void os_main(void)
 {
@@ -91,6 +113,7 @@ void os_main(void)
     task_create(user_task1, 12);
     task_create(user_task_lock0, 10);
     task_create(user_task_lock1, 10);
+    task_create(user_task_create_timer, 10);
     // task_create(user_task2, 15);
     // task_create(user_task3, 20);
     // task_create(user_task4, 30);

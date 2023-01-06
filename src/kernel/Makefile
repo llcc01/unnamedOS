@@ -13,6 +13,10 @@ SRCS_C = \
 	drivers/plic/plic.c \
 	drivers/clint/timer.c \
 	mem/page.c \
+	ds/binary_tree.c \
+	ds/heap.c \
+	ds/linked_list.c \
+	ds/queue.c \
 	utils/printf.c \
 	utils/string.c \
 	utils/malloc.c \
@@ -21,6 +25,7 @@ SRCS_C = \
 	trap/trap.c \
 	trap/isr.c \
 	lock/lock.c \
+	soft_timer/soft_timer.c \
 
 OBJS = $(SRCS_ASM:.S=.o)
 OBJS += $(SRCS_C:.c=.o)

@@ -6,6 +6,8 @@
 #include "sched/sched.h"
 #include "trap/trap.h"
 
+#include "soft_timer/soft_timer.h"
+
 #include "user/user.h"
 
 void start_kernel(void)
@@ -21,6 +23,7 @@ void start_kernel(void)
 
     sched_init();
     timer_init();
+    soft_timer_init();
     
     os_main();
 

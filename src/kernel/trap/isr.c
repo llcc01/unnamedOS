@@ -7,6 +7,7 @@
 #include "utils/printf.h"
 #include "trap/isr.h"
 #include "sched/sched.h"
+#include "soft_timer/soft_timer.h"
 
 void external_interrupt_handler()
 {
@@ -55,6 +56,7 @@ inline void timer_handler()
     // {
     //     printf("tick: %d\n", _tick);
     // }
+    soft_timer_handler();
 
     schedule();
 }
