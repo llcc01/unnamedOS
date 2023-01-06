@@ -15,6 +15,12 @@
         "uart.h": "c",
         "plic.h": "c",
         "timer.h": "c",
-        "lock.h": "c"
+        "lock.h": "c",
+        "soft_timer.h": "c",
+        "malloc.h": "c",
+        "stddef.h": "c",
+        "string.h": "c",
+        "libc-header-start.h": "c",
+        "binary_tree.h": "c"
     }
 }

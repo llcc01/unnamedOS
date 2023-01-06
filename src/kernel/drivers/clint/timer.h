@@ -6,7 +6,7 @@
 /* interval ~= 10ms */
 #define TIMER_INTERVAL CLINT_TIMEBASE_FREQ / 100
 
-extern uint32_t _tick;
+extern uint64_t _tick;
 
 void timer_load(int interval);
 void timer_init();

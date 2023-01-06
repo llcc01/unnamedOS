@@ -3,7 +3,7 @@
 #include "inc/platform.h"
 #include "drivers/clint/timer.h"
 
-uint32_t _tick = 0;
+uint64_t _tick = 0;
 
 /* load timer interval(in ticks) for next timer interrupt.*/
 void timer_load(int interval)

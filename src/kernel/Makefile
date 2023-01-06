@@ -14,6 +14,8 @@ SRCS_C = \
 	drivers/clint/timer.c \
 	mem/page.c \
 	utils/printf.c \
+	utils/string.c \
+	utils/malloc.c \
 	sched/sched.c \
 	user/user.c \
 	trap/trap.c \
