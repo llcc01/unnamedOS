@@ -21,6 +21,7 @@
         "stddef.h": "c",
         "string.h": "c",
         "libc-header-start.h": "c",
-        "binary_tree.h": "c"
+        "binary_tree.h": "c",
+        "heap.h": "c"
     }
 }
