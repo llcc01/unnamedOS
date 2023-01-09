@@ -17,7 +17,7 @@ struct soft_timer
 void soft_timer_init();
 int soft_timer_cmp(void *a, void *b);
 uint16_t soft_timer_create(void (*callback)(void *arg), void *arg, uint32_t interval);
-void soft_timer_delete(struct soft_timer *timer);
+void soft_timer_delete(uint16_t id);
 void soft_timer_calc_next();
 void soft_timer_heap_update();
 void soft_timer_handler();

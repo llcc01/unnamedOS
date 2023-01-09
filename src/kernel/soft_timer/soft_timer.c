@@ -134,17 +134,20 @@ inline void soft_timer_calc_next()
     struct soft_timer *timer = min_heap_get_top_value(&_timer_min_heap);
     // printf("soft_timer_calc_next: %p\n", timer);
 
-    mark();
+    // mark();
     // 如果堆顶的timer无效，则回收，继续取下一个
     while (timer != NULL && timer->interval == 0)
     {
         mark();
-        reg_t id_temp = (reg_t)timer->id;
+        reg_t id_temp = timer->id;
         queue_push(&_free_queue, (void *)id_temp);
-        printf("soft_timer_calc_next free: %p\n", timer);
+        // printf("soft_timer_calc_next free: %p\n", timer);
         free(timer);
-        timer = min_heap_get(&_timer_min_heap);
+        // binary_tree_dump(&_timer_min_heap.tree);
+        min_heap_get(&_timer_min_heap);
+        // binary_tree_dump(&_timer_min_heap.tree);
         // printf("soft_timer_calc_next loop: %p\n", timer);
+        timer = min_heap_get_top_value(&_timer_min_heap);
     }
 
     _next_tick = timer->next_tick;
@@ -184,21 +187,31 @@ inline void soft_timer_heap_update()
 
 inline void soft_timer_handler()
 {
+    // mark();
     if (_next_tick == _tick)
     {
         struct soft_timer *timer = NULL;
         while (1)
         {
+            // mark();
             timer = (struct soft_timer *)min_heap_get_top_value(&_timer_min_heap);
             if (timer->next_tick > _tick)
                 break;
+            // mark();
             timer->callback(timer->arg);
+            // mark();
             timer->next_tick += timer->interval;
+            // mark();
+            // binary_tree_dump(&_timer_min_heap.tree);
             min_heap_sort_down(&_timer_min_heap, _timer_min_heap.tree.root);
+            // mark();
         }
     }
 
+    // mark();
     soft_timer_heap_update();
-    mark();
+    // mark();
     soft_timer_calc_next();
+    // mark();
+    // binary_tree_dump(&_timer_min_heap.tree);
 }

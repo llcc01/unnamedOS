@@ -29,7 +29,7 @@ void queue_push(struct queue *q, void *data)
 
 void *queue_pop(struct queue *q)
 {
-    printf("queue_pop %p %d\n", q->head, q->size);
+    // printf("queue_pop %p %d\n", q->head, q->size);
     if (q->size == 0)
         return NULL;
     struct queue_node *node = q->head->next;

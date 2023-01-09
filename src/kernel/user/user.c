@@ -86,7 +86,7 @@ void user_task_trap(void)
 
 void timer_callback1(uint64_t *tick)
 {
-    printf("Timer callback1: tick %d\n", *tick);
+    printf("\33[0mTimer callback1: tick %d\n", *tick);
 }
 
 void timer_callback2(uint64_t *tick)
@@ -94,9 +94,8 @@ void timer_callback2(uint64_t *tick)
     printf("Timer callback2: tick %d\n", *tick);
 }
 
-void user_task_create_timer()
+void add_soft_timer()
 {
-    uart_puts("Task create timer: Created!\n");
     uint16_t tid = SOFT_TIMER_ID_INVALID;
     tid = soft_timer_create((void (*)(void *))timer_callback1, &_tick, 100);
     if (tid == SOFT_TIMER_ID_INVALID)
@@ -108,6 +107,18 @@ void user_task_create_timer()
     {
         uart_puts("Task create timer: Create timer failed!\n");
     }
+    soft_timer_delete(tid);
+    tid = soft_timer_create((void (*)(void *))timer_callback2, &_tick, 150);
+    if (tid == SOFT_TIMER_ID_INVALID)
+    {
+        uart_puts("Task create timer: Create timer failed!\n");
+    }
+}
+
+void user_task_create_timer()
+{
+    uart_puts("Task create timer: Created!\n");
+    add_soft_timer();
     while (1)
     {
         uart_puts("Task create timer: Running...\n");
@@ -119,17 +130,18 @@ void user_task_create_timer()
 void os_main(void)
 {
     uart_puts("entry os_main\n");
-    spinlock_init(&lock);
+    // spinlock_init(&lock);
     task_create(user_task0, 10);
     task_create(user_task1, 12);
-    task_create(user_task_lock0, 10);
-    task_create(user_task_lock1, 10);
-    task_create(user_task_create_timer, 10);
+    // task_create(user_task_lock0, 10);
+    // task_create(user_task_lock1, 10);
+    // task_create(user_task_create_timer, 10);
     // task_create(user_task2, 15);
     // task_create(user_task3, 20);
     // task_create(user_task4, 30);
     // task_create(user_task5, 20);
     // task_create(user_task_trap);
+    add_soft_timer();
 
     uart_puts("os_main: schedule\n");
 

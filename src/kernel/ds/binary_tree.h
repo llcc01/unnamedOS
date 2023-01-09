@@ -34,6 +34,7 @@ void binary_tree_node_swap(struct binary_tree_node *node1, struct binary_tree_no
 
 
 void binary_tree_init(struct binary_tree *tree);
+void binary_tree_dump(struct binary_tree *tree);
 
 
 void complete_binary_tree_insert(struct complete_binary_tree *cbt, void *data);

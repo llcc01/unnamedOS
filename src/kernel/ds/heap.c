@@ -30,6 +30,7 @@ void min_heap_sort_down(min_heap_t *heap, struct binary_tree_node *node)
 {
     while (node->left != NULL)
     {
+        // mark();
         if (node->right == NULL)
         {
             if (heap->tree.cmp(node->left->data, node->data) < 0)
@@ -52,6 +53,7 @@ void min_heap_sort_down(min_heap_t *heap, struct binary_tree_node *node)
         {
             binary_tree_node_swap(node_op, node);
         }
+        node = node_op;
     }
 }
 
@@ -69,6 +71,7 @@ void *min_heap_get(min_heap_t *heap)
     }
     void *data = heap->tree.root->data;
     heap->tree.root->data = heap->rear->data;
+    // mark();
     complete_binary_tree_del_rear(heap);
     min_heap_sort_down(heap, heap->tree.root);
     return data;

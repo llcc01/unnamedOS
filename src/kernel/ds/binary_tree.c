@@ -34,6 +34,30 @@ void binary_tree_init(struct binary_tree *tree)
     tree->root = NULL;
 }
 
+void binary_tree_node_dump(struct binary_tree_node *node, uint16_t level)
+{
+    for (int i = 0; i < level; i++)
+    {
+        printf("  ");
+    }
+    if (node == NULL)
+    {
+        printf("-\n");
+        return;
+    }
+    struct binary_tree_node *l = node->left;
+    struct binary_tree_node *r = node->right;
+
+    printf("%p %p\n", node, node->data);
+    binary_tree_node_dump(l, level + 1);
+    binary_tree_node_dump(r, level + 1);
+}
+
+void binary_tree_dump(struct binary_tree *tree)
+{
+    binary_tree_node_dump(tree->root, 0);
+}
+
 void complete_binary_tree_insert(struct complete_binary_tree *cbt, void *data)
 {
     struct binary_tree *tree = &cbt->tree;
@@ -42,7 +66,7 @@ void complete_binary_tree_insert(struct complete_binary_tree *cbt, void *data)
     {
         return;
     }
-    printf("complete_binary_tree_insert %p %p\n", node_new, node_new->data);
+    // printf("complete_binary_tree_insert %p %p\n", node_new, node_new->data);
     if (tree->root == NULL)
     {
         tree->root = node_new;
@@ -90,9 +114,11 @@ void complete_binary_tree_del_rear(struct complete_binary_tree *cbt)
     }
     if (cbt->rear->dir == BINARY_TREE_NODE_RIGHT)
     {
-        cbt->rear = cbt->rear->parent->left;
-        binary_tree_node_destroy(cbt->rear->right);
-        cbt->rear->parent->right = NULL;
+        struct binary_tree_node *parent = cbt->rear->parent;
+        cbt->rear = parent->left;
+        // mark();
+        binary_tree_node_destroy(parent->right);
+        parent->right = NULL;
         return;
     }
 
@@ -112,6 +138,8 @@ void complete_binary_tree_del_rear(struct complete_binary_tree *cbt)
         node = node->right;
     }
 
+    cbt->rear->parent->left = NULL;
+    // mark();
     binary_tree_node_destroy(cbt->rear);
     cbt->rear = node;
 }
