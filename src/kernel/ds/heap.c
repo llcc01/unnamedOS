@@ -20,9 +20,7 @@ void min_heap_sort_up(min_heap_t *heap, struct binary_tree_node *node)
         // printf("min_heap_sort_up %p %p %p\n", node, node->parent, node->data);
         if (heap->tree.cmp(node->parent->data, node->data) > 0)
         {
-            void *tmp = node->parent->data;
-            node->parent->data = node->data;
-            node->data = tmp;
+            binary_tree_node_swap(node->parent, node);
         }
         node = node->parent;
     }
@@ -67,7 +65,7 @@ void *min_heap_get(min_heap_t *heap)
 {
     if (heap->tree.root == NULL)
     {
-        return;
+        return NULL;
     }
     void *data = heap->tree.root->data;
     heap->tree.root->data = heap->rear->data;
@@ -80,7 +78,8 @@ void *min_heap_get_top_value(min_heap_t *heap)
 {
     if (heap->tree.root == NULL)
     {
-        return;
+        printf("min_heap_get_top_value NULL\n");
+        return NULL;
     }
     void *data = heap->tree.root->data;
     return data;

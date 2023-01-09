@@ -42,14 +42,14 @@ void complete_binary_tree_insert(struct complete_binary_tree *cbt, void *data)
     {
         return;
     }
-    // printf("complete_binary_tree_insert %p %p\n", node_new, data);
+    printf("complete_binary_tree_insert %p %p\n", node_new, node_new->data);
     if (tree->root == NULL)
     {
         tree->root = node_new;
         cbt->rear = node_new;
         return;
     }
-    printf("test\n");
+
     if (cbt->rear->dir == BINARY_TREE_NODE_LEFT)
     {
         cbt->rear->parent->right = node_new;

@@ -2,6 +2,7 @@
 #include "drivers/plic/plic.h"
 #include "drivers/clint/timer.h"
 #include "utils/printf.h"
+#include "utils/malloc.h"
 #include "mem/page.h"
 #include "sched/sched.h"
 #include "trap/trap.h"
@@ -17,6 +18,7 @@ void start_kernel(void)
 
     page_init();
     // page_test();
+    malloc_init();
 
     trap_init();
     plic_init();

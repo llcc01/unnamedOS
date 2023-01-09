@@ -4,6 +4,7 @@
 #include <stddef.h>
 
 #include "utils/malloc.h"
+#include "utils/printf.h"
 #include "ds/queue.h"
 
 void queue_init(struct queue *q)
@@ -28,10 +29,11 @@ void queue_push(struct queue *q, void *data)
 
 void *queue_pop(struct queue *q)
 {
+    printf("queue_pop %p %d\n", q->head, q->size);
     if (q->size == 0)
         return NULL;
     struct queue_node *node = q->head->next;
-    q->head = node->next;
+    q->head->next = node->next;
     void *data = node->data;
     free(node);
     q->size--;

@@ -89,10 +89,21 @@ void timer_callback1(uint64_t *tick)
     printf("Timer callback1: tick %d\n", *tick);
 }
 
+void timer_callback2(uint64_t *tick)
+{
+    printf("Timer callback2: tick %d\n", *tick);
+}
+
 void user_task_create_timer()
 {
     uart_puts("Task create timer: Created!\n");
-    uint16_t tid = soft_timer_create((void (*)(void *))timer_callback1, &_tick, 100);
+    uint16_t tid = SOFT_TIMER_ID_INVALID;
+    tid = soft_timer_create((void (*)(void *))timer_callback1, &_tick, 100);
+    if (tid == SOFT_TIMER_ID_INVALID)
+    {
+        uart_puts("Task create timer: Create timer failed!\n");
+    }
+    tid = soft_timer_create((void (*)(void *))timer_callback2, &_tick, 50);
     if (tid == SOFT_TIMER_ID_INVALID)
     {
         uart_puts("Task create timer: Create timer failed!\n");
