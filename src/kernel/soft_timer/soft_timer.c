@@ -104,8 +104,14 @@ uint16_t soft_timer_create(void (*callback)(void *arg), void *arg, uint32_t inte
  * @brief 释放定时器
  * 此处只是标记为无效，实际释放在soft_timer_calc_next中
  */
-void soft_timer_delete(struct soft_timer *timer)
+void soft_timer_delete(uint16_t id)
 {
+    struct soft_timer *timer = _soft_timers[id];
+    if (timer == NULL)
+    {
+        return;
+    }
+
     spin_lock(&soft_timer_lock);
 
     struct soft_timer_op *op = (struct soft_timer_op *)malloc(sizeof(struct soft_timer_op));
@@ -128,11 +134,14 @@ inline void soft_timer_calc_next()
     struct soft_timer *timer = min_heap_get_top_value(&_timer_min_heap);
     // printf("soft_timer_calc_next: %p\n", timer);
 
+    mark();
     // 如果堆顶的timer无效，则回收，继续取下一个
-    while (timer->interval == 0)
+    while (timer != NULL && timer->interval == 0)
     {
+        mark();
         reg_t id_temp = (reg_t)timer->id;
         queue_push(&_free_queue, (void *)id_temp);
+        printf("soft_timer_calc_next free: %p\n", timer);
         free(timer);
         timer = min_heap_get(&_timer_min_heap);
         // printf("soft_timer_calc_next loop: %p\n", timer);
@@ -190,7 +199,6 @@ inline void soft_timer_handler()
     }
 
     soft_timer_heap_update();
-    // if (_timer_min_heap.tree.root != NULL)
-    //     printf("soft_timer_handler heap top: %p %p\n", _timer_min_heap.tree.root, _timer_min_heap.tree.root->data);
+    mark();
     soft_timer_calc_next();
 }
