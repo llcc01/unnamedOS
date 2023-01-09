@@ -63,6 +63,7 @@ uint16_t soft_timer_create(void (*callback)(void *arg), void *arg, uint32_t inte
         if (new_timers == NULL)
         {
             spin_unlock(&soft_timer_lock);
+            printf("soft_timer_create: new_timers realloc failed\n");
             return SOFT_TIMER_ID_INVALID;
         }
         _soft_timers = new_timers;
@@ -79,6 +80,7 @@ uint16_t soft_timer_create(void (*callback)(void *arg), void *arg, uint32_t inte
     if (timer == NULL)
     {
         spin_unlock(&soft_timer_lock);
+        printf("soft_timer_create: timer malloc failed\n");
         return SOFT_TIMER_ID_INVALID;
     }
     timer->callback = callback;
@@ -122,7 +124,9 @@ inline void soft_timer_calc_next()
         return;
     }
 
-    struct soft_timer *timer = min_heap_get(&_timer_min_heap);
+    // printf("soft_timer_calc_next heap top: %p\n", _timer_min_heap.tree.root->data);
+    struct soft_timer *timer = min_heap_get_top_value(&_timer_min_heap);
+    // printf("soft_timer_calc_next: %p\n", timer);
 
     // 如果堆顶的timer无效，则回收，继续取下一个
     while (timer->interval == 0)
@@ -131,6 +135,7 @@ inline void soft_timer_calc_next()
         queue_push(&_free_queue, (void *)id_temp);
         free(timer);
         timer = min_heap_get(&_timer_min_heap);
+        // printf("soft_timer_calc_next loop: %p\n", timer);
     }
 
     _next_tick = timer->next_tick;
@@ -145,13 +150,15 @@ inline void soft_timer_heap_update()
     struct soft_timer_op *op;
     while (_op_queue.size > 0)
     {
+        // printf("soft_timer_heap_update: %p\n", &_op_queue);
         op = (struct soft_timer_op *)queue_pop(&_op_queue);
+        // printf("soft_timer_heap_update op: %p\n", op);
         switch (op->op)
         {
         case SOFT_TIMER_OP_INSERT:
             op->timer->next_tick = _tick + op->timer->interval;
             min_heap_insert(&_timer_min_heap, op->timer);
-            // printf("soft_timer_heap_update: %p %p\n", _timer_min_heap.tree.root, _timer_min_heap.tree.root->data);
+            // printf("soft_timer_heap_update heap top: %p %p\n", _timer_min_heap.tree.root, _timer_min_heap.tree.root->data);
             break;
         case SOFT_TIMER_OP_DELETE:
             op->timer->interval = 0;
@@ -159,7 +166,10 @@ inline void soft_timer_heap_update()
         default:
             break;
         }
+        // printf("soft_timer_heap_update2 heap top: %p %p\n", _timer_min_heap.tree.root, _timer_min_heap.tree.root->data);
+
         free(op);
+        // printf("soft_timer_heap_update3 heap top: %p %p\n", _timer_min_heap.tree.root, _timer_min_heap.tree.root->data);
     }
 }
 
@@ -168,10 +178,10 @@ inline void soft_timer_handler()
     if (_next_tick == _tick)
     {
         struct soft_timer *timer = NULL;
-        while(1)
+        while (1)
         {
             timer = (struct soft_timer *)min_heap_get_top_value(&_timer_min_heap);
-            if(timer->next_tick > _tick)
+            if (timer->next_tick > _tick)
                 break;
             timer->callback(timer->arg);
             timer->next_tick += timer->interval;
@@ -180,5 +190,7 @@ inline void soft_timer_handler()
     }
 
     soft_timer_heap_update();
+    // if (_timer_min_heap.tree.root != NULL)
+    //     printf("soft_timer_handler heap top: %p %p\n", _timer_min_heap.tree.root, _timer_min_heap.tree.root->data);
     soft_timer_calc_next();
 }
