@@ -86,12 +86,12 @@ void user_task_trap(void)
 
 void timer_callback1(uint64_t *tick)
 {
-    printf("\33[0mTimer callback1: tick %d\n", *tick);
+    printf("\33[31mTimer callback1: tick %d\33[0m\n", *tick);
 }
 
 void timer_callback2(uint64_t *tick)
 {
-    printf("Timer callback2: tick %d\n", *tick);
+    printf("\33[32mTimer callback2: tick %d\33[0m\n", *tick);
 }
 
 void add_soft_timer()

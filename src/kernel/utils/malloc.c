@@ -21,7 +21,7 @@ void malloc_init()
     mf->size = 0;
     mf->prev = NULL;
     mf->next = (struct malloc_frame *)(_used->data + PAGE_FRAME_SIZE);
-    printf("[malloc init] ptr:%p mf:%p end:%p\n", mf->data, mf, mf->next);
+    // printf("[malloc init] ptr:%p mf:%p end:%p\n", mf->data, mf, mf->next);
 }
 
 void *malloc(size_t size)
@@ -89,7 +89,7 @@ void *malloc(size_t size)
             next_ori->prev = next;
         }
 
-        printf("[malloc] ptr:%p mf:%p next:%p\n", mf->data, mf, mf->next);
+        // printf("[malloc] ptr:%p mf:%p next:%p\n", mf->data, mf, mf->next);
         return mf->data;
     }
 
@@ -99,7 +99,7 @@ void *malloc(size_t size)
 void free(void *ptr)
 {
     struct malloc_frame *mf = (struct malloc_frame *)((uint8_t *)ptr - sizeof(struct malloc_frame));
-    printf("[free] ptr:%p mf:%p end:%p\n", ptr, mf, mf->next);
+    // printf("[free] ptr:%p mf:%p end:%p\n", ptr, mf, mf->next);
     mf->size = 0;
     struct malloc_frame *prev = mf->prev;
     struct malloc_frame *next = mf->next;

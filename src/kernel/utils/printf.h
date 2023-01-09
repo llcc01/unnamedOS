@@ -6,7 +6,7 @@ extern void panic(char *s);
 
 #define mark()                                         \
     {                                                  \
-        printf("[mark] %s:%d\n", __FILE__, __LINE__); \
+        printf("\33[34m[mark]\33[0m %s:%d\n", __FILE__, __LINE__); \
     }
 
 #endif
